@@ -1,0 +1,126 @@
+Microsoft Windows [Version 10.0.17134.523]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\ASUS>cd c:\xampp\mysql\bin
+
+c:\xampp\mysql\bin>mysql.exe -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 21
+Server version: 10.1.19-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2016, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| data_mahasiswa     |
+| dosen              |
+| information_schema |
+| inventory_db       |
+| jenis_hewan        |
+| latihan01          |
+| mahasiswa          |
+| mysql              |
+| pegawai            |
+| performance_schema |
+| phpmyadmin         |
+| test               |
+| tutor              |
++--------------------+
+13 rows in set (0.00 sec)
+
+MariaDB [(none)]> use jenis_hewan;
+Database changed
+MariaDB [jenis_hewan]> select * from peliharaan;
++----------+--------+---------+------+------------+------------+
+| name     | owner  | species | sex  | birth      | death      |
++----------+--------+---------+------+------------+------------+
+| puffball | diane  | hamster | f    | 1999-03-03 | NULL       |
+| claws    | gwen   | cat     | m    | 1994-03-17 | NULL       |
+| fluffy   | harold | cat     | f    | 1993-02-04 | NULL       |
+| buffy    | harold | dog     | f    | 1989-05-13 | NULL       |
+| fang     | benny  | dog     | m    | 1990-08-27 | NULL       |
+| bowser   | diane  | dog     | m    | 1989-08-31 | 1995-07-29 |
+| chirpy   | gwen   | bird    | f    | 1998-09-11 | NULL       |
+| whistler | gwen   | bird    | NULL | 1997-12-09 | NULL       |
+| slim     | benny  | snake   | m    | 1996-04-29 | NULL       |
++----------+--------+---------+------+------------+------------+
+9 rows in set (0.00 sec)
+
+MariaDB [jenis_hewan]> select owner, count(species)AS jumlah from peliharaan GROUP BY owner;
++--------+--------+
+| owner  | jumlah |
++--------+--------+
+| benny  |      2 |
+| diane  |      2 |
+| gwen   |      3 |
+| harold |      2 |
++--------+--------+
+4 rows in set (0.00 sec)
+
+MariaDB [jenis_hewan]> select species, count(species)AS jumlah from peliharaan GROUP BY species;
++---------+--------+
+| species | jumlah |
++---------+--------+
+| bird    |      2 |
+| cat     |      2 |
+| dog     |      3 |
+| hamster |      1 |
+| snake   |      1 |
++---------+--------+
+5 rows in set (0.00 sec)
+
+MariaDB [jenis_hewan]> select sex, count(species)AS jumlah from peliharaan GROUP BY sex;
++------+--------+
+| sex  | jumlah |
++------+--------+
+| NULL |      1 |
+| f    |      4 |
+| m    |      4 |
++------+--------+
+3 rows in set (0.00 sec)
+
+MariaDB [jenis_hewan]> select species, sex,  count(species)AS jumlah from peliharaan GROUP BY sex, species;
++---------+------+--------+
+| species | sex  | jumlah |
++---------+------+--------+
+| bird    | NULL |      1 |
+| bird    | f    |      1 |
+| cat     | f    |      1 |
+| dog     | f    |      1 |
+| hamster | f    |      1 |
+| cat     | m    |      1 |
+| dog     | m    |      2 |
+| snake   | m    |      1 |
++---------+------+--------+
+8 rows in set (0.00 sec)
+
+MariaDB [jenis_hewan]> select sex, species,  count(species)AS jumlah from peliharaan where species ='cat' or species ='dog' GROUP BY sex, species;
++------+---------+--------+
+| sex  | species | jumlah |
++------+---------+--------+
+| f    | cat     |      1 |
+| f    | dog     |      1 |
+| m    | cat     |      1 |
+| m    | dog     |      2 |
++------+---------+--------+
+4 rows in set (0.00 sec)
+
+MariaDB [jenis_hewan]> select sex, species from peliharaan where sex is not NULL GROUP BY sex, species;
++------+---------+
+| sex  | species |
++------+---------+
+| f    | bird    |
+| f    | cat     |
+| f    | dog     |
+| f    | hamster |
+| m    | cat     |
+| m    | dog     |
+| m    | snake   |
++------+---------+
+7 rows in set (0.00 sec)
+
+MariaDB [jenis_hewan]>

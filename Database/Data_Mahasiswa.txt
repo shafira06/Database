@@ -1,0 +1,150 @@
+Microsoft Windows [Version 10.0.17134.523]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\ASUS>cd c:\xampp\mysql\bin
+
+c:\xampp\mysql\bin>mysql.exe -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 11
+Server version: 10.1.19-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2016, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| data_mahasiswa     |
+| dosen              |
+| information_schema |
+| inventory_db       |
+| jenis_hewan        |
+| latihan01          |
+| mahasiswa          |
+| mysql              |
+| pegawai            |
+| performance_schema |
+| phpmyadmin         |
+| test               |
+| tutor              |
++--------------------+
+13 rows in set (0.00 sec)
+
+MariaDB [(none)]> use data_mahasiswa;
+Database changed
+MariaDB [data_mahasiswa]> select * from data_mahasiswa;
++----------+---------------+--------------+----------+----------+---------------+-------+------------+------------+
+| nim      | nama          | alamat_jalan | kota     | kode_pos | jenis_kelamin | no_hp | tgl_lhr    | kode_dosen |
++----------+---------------+--------------+----------+----------+---------------+-------+------------+------------+
+| 11223344 | Ari Santoso   |              | Bekasi   |          | Laki-laki     |       | 1979-08-31 |            |
+| 11223345 | Ario Talib    |              | Cikarang |          | Laki-laki     |       | 1999-11-16 |            |
+| 11223347 | Lisa Ayu      |              | Bekasi   |          | Perempuan     |       | 1986-01-02 |            |
+| 11223348 | Tiara Wahidah |              | Bekasi   |          | Perempuan     |       | 1980-02-05 |            |
+| 11223349 | Anton Sinaga  |              | Cikarang |          | Laki-laki     |       | 1988-03-10 |            |
++----------+---------------+--------------+----------+----------+---------------+-------+------------+------------+
+5 rows in set (0.08 sec)
+
+MariaDB [data_mahasiswa]> update data_mahasiswa set tgl_lhr ='1998-10-12' where nim ='11223344';
+Query OK, 1 row affected (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [data_mahasiswa]> select * from data_mahasiswa;
++----------+---------------+--------------+----------+----------+---------------+-------+------------+------------+
+| nim      | nama          | alamat_jalan | kota     | kode_pos | jenis_kelamin | no_hp | tgl_lhr    | kode_dosen |
++----------+---------------+--------------+----------+----------+---------------+-------+------------+------------+
+| 11223344 | Ari Santoso   |              | Bekasi   |          | Laki-laki     |       | 1998-10-12 |            |
+| 11223345 | Ario Talib    |              | Cikarang |          | Laki-laki     |       | 1999-11-16 |            |
+| 11223347 | Lisa Ayu      |              | Bekasi   |          | Perempuan     |       | 1986-01-02 |            |
+| 11223348 | Tiara Wahidah |              | Bekasi   |          | Perempuan     |       | 1980-02-05 |            |
+| 11223349 | Anton Sinaga  |              | Cikarang |          | Laki-laki     |       | 1988-03-10 |            |
++----------+---------------+--------------+----------+----------+---------------+-------+------------+------------+
+5 rows in set (0.00 sec)
+
+MariaDB [data_mahasiswa]> select * from data_mahasiswa where nim ='11223344';
++----------+-------------+--------------+--------+----------+---------------+-------+------------+------------+
+| nim      | nama        | alamat_jalan | kota   | kode_pos | jenis_kelamin | no_hp | tgl_lhr    | kode_dosen |
++----------+-------------+--------------+--------+----------+---------------+-------+------------+------------+
+| 11223344 | Ari Santoso |              | Bekasi |          | Laki-laki     |       | 1998-10-12 |            |
++----------+-------------+--------------+--------+----------+---------------+-------+------------+------------+
+1 row in set (0.00 sec)
+
+MariaDB [data_mahasiswa]> delete from data_mahasiswa where nim ='11223347';
+Query OK, 1 row affected (0.10 sec)
+
+MariaDB [data_mahasiswa]> select * from data_mahasiswa;
++----------+---------------+--------------+----------+----------+---------------+-------+------------+------------+
+| nim      | nama          | alamat_jalan | kota     | kode_pos | jenis_kelamin | no_hp | tgl_lhr    | kode_dosen |
++----------+---------------+--------------+----------+----------+---------------+-------+------------+------------+
+| 11223344 | Ari Santoso   |              | Bekasi   |          | Laki-laki     |       | 1998-10-12 |            |
+| 11223345 | Ario Talib    |              | Cikarang |          | Laki-laki     |       | 1999-11-16 |            |
+| 11223348 | Tiara Wahidah |              | Bekasi   |          | Perempuan     |       | 1980-02-05 |            |
+| 11223349 | Anton Sinaga  |              | Cikarang |          | Laki-laki     |       | 1988-03-10 |            |
++----------+---------------+--------------+----------+----------+---------------+-------+------------+------------+
+4 rows in set (0.00 sec)
+
+MariaDB [data_mahasiswa]> select * from data_mahasiswa where tgl_lhr >= '1996-01-02';
++----------+-------------+--------------+----------+----------+---------------+-------+------------+------------+
+| nim      | nama        | alamat_jalan | kota     | kode_pos | jenis_kelamin | no_hp | tgl_lhr    | kode_dosen |
++----------+-------------+--------------+----------+----------+---------------+-------+------------+------------+
+| 11223344 | Ari Santoso |              | Bekasi   |          | Laki-laki     |       | 1998-10-12 |            |
+| 11223345 | Ario Talib  |              | Cikarang |          | Laki-laki     |       | 1999-11-16 |            |
++----------+-------------+--------------+----------+----------+---------------+-------+------------+------------+
+2 rows in set (0.03 sec)
+
+MariaDB [data_mahasiswa]> select * from data_mahasiswa where kota ='bekasi' and jenis_kelamin ='perempuan';
++----------+---------------+--------------+--------+----------+---------------+-------+------------+------------+
+| nim      | nama          | alamat_jalan | kota   | kode_pos | jenis_kelamin | no_hp | tgl_lhr    | kode_dosen |
++----------+---------------+--------------+--------+----------+---------------+-------+------------+------------+
+| 11223348 | Tiara Wahidah |              | Bekasi |          | Perempuan     |       | 1980-02-05 |            |
++----------+---------------+--------------+--------+----------+---------------+-------+------------+------------+
+1 row in set (0.04 sec)
+
+MariaDB [data_mahasiswa]> select nama, kota, jenis_kelamin, tgl_lhr
+    -> from data_mahasiswa
+    -> where kota ='bekasi' and jenis_kelamin ='laki-laki'
+    -> or tgl_lhr > 22 and jenis_kelamin ='perempuan'
+    -> order by nama;
++---------------+--------+---------------+------------+
+| nama          | kota   | jenis_kelamin | tgl_lhr    |
++---------------+--------+---------------+------------+
+| Ari Santoso   | Bekasi | Laki-laki     | 1998-10-12 |
+| Tiara Wahidah | Bekasi | Perempuan     | 1980-02-05 |
++---------------+--------+---------------+------------+
+2 rows in set, 1 warning (0.00 sec)
+
+MariaDB [data_mahasiswa]> select nama, alamat_jalan from data_mahasiswa;
++---------------+--------------+
+| nama          | alamat_jalan |
++---------------+--------------+
+| Ari Santoso   |              |
+| Ario Talib    |              |
+| Tiara Wahidah |              |
+| Anton Sinaga  |              |
++---------------+--------------+
+4 rows in set (0.00 sec)
+
+MariaDB [data_mahasiswa]> select * from data_mahasiswa order by nama ASC;
++----------+---------------+--------------+----------+----------+---------------+-------+------------+------------+
+| nim      | nama          | alamat_jalan | kota     | kode_pos | jenis_kelamin | no_hp | tgl_lhr    | kode_dosen |
++----------+---------------+--------------+----------+----------+---------------+-------+------------+------------+
+| 11223349 | Anton Sinaga  |              | Cikarang |          | Laki-laki     |       | 1988-03-10 |            |
+| 11223344 | Ari Santoso   |              | Bekasi   |          | Laki-laki     |       | 1998-10-12 |            |
+| 11223345 | Ario Talib    |              | Cikarang |          | Laki-laki     |       | 1999-11-16 |            |
+| 11223348 | Tiara Wahidah |              | Bekasi   |          | Perempuan     |       | 1980-02-05 |            |
++----------+---------------+--------------+----------+----------+---------------+-------+------------+------------+
+4 rows in set (0.00 sec)
+
+MariaDB [data_mahasiswa]> select * from data_mahasiswa order by nama DESC;
++----------+---------------+--------------+----------+----------+---------------+-------+------------+------------+
+| nim      | nama          | alamat_jalan | kota     | kode_pos | jenis_kelamin | no_hp | tgl_lhr    | kode_dosen |
++----------+---------------+--------------+----------+----------+---------------+-------+------------+------------+
+| 11223348 | Tiara Wahidah |              | Bekasi   |          | Perempuan     |       | 1980-02-05 |            |
+| 11223345 | Ario Talib    |              | Cikarang |          | Laki-laki     |       | 1999-11-16 |            |
+| 11223344 | Ari Santoso   |              | Bekasi   |          | Laki-laki     |       | 1998-10-12 |            |
+| 11223349 | Anton Sinaga  |              | Cikarang |          | Laki-laki     |       | 1988-03-10 |            |
++----------+---------------+--------------+----------+----------+---------------+-------+------------+------------+
+4 rows in set (0.00 sec)
+
+MariaDB [data_mahasiswa]>

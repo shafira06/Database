@@ -1,0 +1,120 @@
+Microsoft Windows [Version 10.0.17134.523]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Users\ASUS>cd c:\xampp\mysql\bin
+
+c:\xampp\mysql\bin>mysql.exe -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 12
+Server version: 10.1.19-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2016, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| data_mahasiswa     |
+| dosen              |
+| information_schema |
+| inventory_db       |
+| jenis_hewan        |
+| latihan01          |
+| mahasiswa          |
+| mysql              |
+| pegawai            |
+| performance_schema |
+| phpmyadmin         |
+| test               |
+| tutor              |
++--------------------+
+13 rows in set (0.00 sec)
+
+MariaDB [(none)]> use pegawai;
+Database changed
+MariaDB [pegawai]> select * from pegawai;
++------------+------------+---------------+-----------------+--------------+-------------+--------+------------+-----------+
+| id_pegawai | nama_depan | nama_belakang | email           | telepon      | tgl_kontrak | id_job | gaji       | tunjangan |
++------------+------------+---------------+-----------------+--------------+-------------+--------+------------+-----------+
+| E001       | ferry      | gustiawan     | ferry@yahoo.com | 07117059004  | 2005-09-01  | L0001  | 2000000.00 | 500000.00 |
+| E002       | aris       | ganiardi      | aris@yahoo.com  | 081312345678 | 2006-09-01  | L0002  | 2000000.00 | 200000.00 |
+| E003       | faiz       | ahmad         | faiz@gmail.com  | 081367384322 | 2006-10-01  | L0003  | 1500000.00 |      NULL |
+| E004       | emma       | bunton        | emma@gmail.com  | 081363484342 | 2006-10-01  | L0004  | 1500000.00 |      0.00 |
+| E005       | mike       | scoff         | mike@plasa.com  | 08163454555  | 2007-09-01  | L0005  | 1250000.00 |      0.00 |
+| E006       | lincoln    | burrows       | linc@yahoo.com  | 08527388432  | 2008-09-01  | L0006  | 1750000.00 |      NULL |
++------------+------------+---------------+-----------------+--------------+-------------+--------+------------+-----------+
+6 rows in set (0.11 sec)
+
+MariaDB [pegawai]> select * from pegawai where gaji <> '2000000' and gaji <> '1250000';
++------------+------------+---------------+----------------+--------------+-------------+--------+------------+-----------+
+| id_pegawai | nama_depan | nama_belakang | email          | telepon      | tgl_kontrak | id_job | gaji       | tunjangan |
++------------+------------+---------------+----------------+--------------+-------------+--------+------------+-----------+
+| E003       | faiz       | ahmad         | faiz@gmail.com | 081367384322 | 2006-10-01  | L0003  | 1500000.00 |      NULL |
+| E004       | emma       | bunton        | emma@gmail.com | 081363484342 | 2006-10-01  | L0004  | 1500000.00 |      0.00 |
+| E006       | lincoln    | burrows       | linc@yahoo.com | 08527388432  | 2008-09-01  | L0006  | 1750000.00 |      NULL |
++------------+------------+---------------+----------------+--------------+-------------+--------+------------+-----------+
+3 rows in set (0.00 sec)
+
+MariaDB [pegawai]> select * from pegawai where tunjangan is NULL;
++------------+------------+---------------+----------------+--------------+-------------+--------+------------+-----------+
+| id_pegawai | nama_depan | nama_belakang | email          | telepon      | tgl_kontrak | id_job | gaji       | tunjangan |
++------------+------------+---------------+----------------+--------------+-------------+--------+------------+-----------+
+| E003       | faiz       | ahmad         | faiz@gmail.com | 081367384322 | 2006-10-01  | L0003  | 1500000.00 |      NULL |
+| E006       | lincoln    | burrows       | linc@yahoo.com | 08527388432  | 2008-09-01  | L0006  | 1750000.00 |      NULL |
++------------+------------+---------------+----------------+--------------+-------------+--------+------------+-----------+
+2 rows in set (0.00 sec)
+
+MariaDB [pegawai]> select * from pegawai where tunjangan is not NULL;
++------------+------------+---------------+-----------------+--------------+-------------+--------+------------+-----------+
+| id_pegawai | nama_depan | nama_belakang | email           | telepon      | tgl_kontrak | id_job | gaji       | tunjangan |
++------------+------------+---------------+-----------------+--------------+-------------+--------+------------+-----------+
+| E001       | ferry      | gustiawan     | ferry@yahoo.com | 07117059004  | 2005-09-01  | L0001  | 2000000.00 | 500000.00 |
+| E002       | aris       | ganiardi      | aris@yahoo.com  | 081312345678 | 2006-09-01  | L0002  | 2000000.00 | 200000.00 |
+| E004       | emma       | bunton        | emma@gmail.com  | 081363484342 | 2006-10-01  | L0004  | 1500000.00 |      0.00 |
+| E005       | mike       | scoff         | mike@plasa.com  | 08163454555  | 2007-09-01  | L0005  | 1250000.00 |      0.00 |
++------------+------------+---------------+-----------------+--------------+-------------+--------+------------+-----------+
+4 rows in set (0.00 sec)
+
+MariaDB [pegawai]> select count(id_pegawai)AS jumlah from pegawai;
++--------+
+| jumlah |
++--------+
+|      6 |
++--------+
+1 row in set (0.03 sec)
+
+MariaDB [pegawai]> select sum(gaji)AS jumlah from pegawai;
++-------------+
+| jumlah      |
++-------------+
+| 10000000.00 |
++-------------+
+1 row in set (0.00 sec)
+
+MariaDB [pegawai]> select avg(gaji)AS jumlah from pegawai;
++----------------+
+| jumlah         |
++----------------+
+| 1666666.666667 |
++----------------+
+1 row in set (0.04 sec)
+
+MariaDB [pegawai]> select min(gaji)AS termurah from pegawai;
++------------+
+| termurah   |
++------------+
+| 1250000.00 |
++------------+
+1 row in set (0.00 sec)
+
+MariaDB [pegawai]> select max(gaji)AS termahal from pegawai;
++------------+
+| termahal   |
++------------+
+| 2000000.00 |
++------------+
+1 row in set (0.00 sec)
+
+MariaDB [pegawai]>
