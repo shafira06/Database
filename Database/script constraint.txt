@@ -1,0 +1,133 @@
+
+c:\xampp\mysql\bin>cd c:/xampp/mysql/bin
+
+c:\xampp\mysql\bin>mysql.exe -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.1.10-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2015, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| perusahaan         |
+| phpmyadmin         |
+| sekolah            |
+| test               |
++--------------------+
+7 rows in set (0.00 sec)
+
+MariaDB [(none)]> use perusahaan;
+Database changed
+MariaDB [perusahaan]> show tables;
++----------------------+
+| Tables_in_perusahaan |
++----------------------+
+| departemen           |
+| karyawan             |
+| perusahaan           |
+| project              |
+| projectdetail        |
++----------------------+
+5 rows in set (0.00 sec)
+
+MariaDB [perusahaan]> alter table departemen
+    -> add foreign key fk_perusahaan(id_p)
+    -> references perusahaan(id_p);
+Query OK, 4 rows affected (1.46 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [perusahaan]> alter table departemen drop foreign key fk_perusahaan;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [perusahaan]> alter table departemen
+    -> add foreign key fk_perusahaan(id_p)
+    -> references perusahaan(id_p)
+    -> ON UPDATE CASCADE ON DELETE RESTRICT;
+Query OK, 4 rows affected (1.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [perusahaan]> select * from perusahaan;
++------+---------------+--------+
+| id_p | nama          | alamat |
++------+---------------+--------+
+| P01  | Kantor Pusat  | NULL   |
+| P02  | Cabang Bekasi | NULL   |
++------+---------------+--------+
+2 rows in set (0.00 sec)
+
+MariaDB [perusahaan]> update perusahaan set nama ='Cabang Bandung' where id_p ='
+P02';
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [perusahaan]> select * from perusahaan;
++------+----------------+--------+
+| id_p | nama           | alamat |
++------+----------------+--------+
+| P01  | Kantor Pusat   | NULL   |
+| P02  | Cabang Bandung | NULL   |
++------+----------------+--------+
+2 rows in set (0.00 sec)
+
+MariaDB [perusahaan]> select * from departemen;
++---------+-----------+------+-------------+
+| id_dept | nama      | id_p | manajer_nik |
++---------+-----------+------+-------------+
+| D01     | Produksi  | P02  | N01         |
+| D02     | Marketing | P01  | N03         |
+| D03     | RnD       | P02  | NULL        |
+| D04     | Logistik  | P02  | NULL        |
++---------+-----------+------+-------------+
+4 rows in set (0.00 sec)
+
+MariaDB [perusahaan]> delete from perusahaan where id_p ='P02';
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constrai
+nt fails (`perusahaan`.`departemen`, CONSTRAINT `fk_perusahaan` FOREIGN KEY (`id
+_p`) REFERENCES `perusahaan` (`id_p`) ON UPDATE CASCADE)
+MariaDB [perusahaan]> alter table departemen drop foreign key fk_perusahaan;
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [perusahaan]> alter table departemen
+    -> add foreign key fk_perusahaan(id_p)
+    -> references perusahaan(id_p)
+    -> ON UPDATE CASCADE ON DELETE SET NULL;
+Query OK, 4 rows affected (1.06 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [perusahaan]> delete from perusahaan where id_p ='P02';
+Query OK, 1 row affected (0.10 sec)
+
+MariaDB [perusahaan]> select * from perusahaan;
++------+--------------+--------+
+| id_p | nama         | alamat |
++------+--------------+--------+
+| P01  | Kantor Pusat | NULL   |
++------+--------------+--------+
+1 row in set (0.00 sec)
+
+MariaDB [perusahaan]> select * from departemen;
++---------+-----------+------+-------------+
+| id_dept | nama      | id_p | manajer_nik |
++---------+-----------+------+-------------+
+| D01     | Produksi  | NULL | N01         |
+| D02     | Marketing | P01  | N03         |
+| D03     | RnD       | NULL | NULL        |
+| D04     | Logistik  | NULL | NULL        |
++---------+-----------+------+-------------+
+4 rows in set (0.00 sec)
+
+MariaDB [perusahaan]>
+MariaDB [perusahaan]>
+MariaDB [perusahaan]>
+MariaDB [perusahaan]>
+MariaDB [perusahaan]>

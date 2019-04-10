@@ -1,0 +1,94 @@
+create database sewamobil;
+
+use Sewa_Mobil
+
+create table Mobil (
+Kode varchar(10) primary key,
+Jenis varchar(20),
+Merk varchar(20),
+Tarif int(20),
+Nopol varchar(15));
+
+desc mobil;
+
+insert into mobil(kode, jenis, merk, tarif, nopol) values
+("M001", "SEDAN", "BMW E5", "500000", "BG1234AA"),
+("M002", "SEDAN", "HONDA CRV", "350000", "BG2345BB"),
+("M003", "BUS", "MERCEDEZ", "1000000", "BG3456CC"),
+("M004", "BUS", "DYNA", "800000", "BG8443DD"),
+("M005", "TRUCK", "HYNO ZX", "1500000", "BG4638EE"),
+("M006", "TRUCK", "DYNA X1", "1500000", "BG8473FF");
+
+select * from Mobil;
+
+create table Sewa
+(NoFakturSewa varchar(10),
+KodePelanggan varchar(10),
+TglSewa date,
+KodeMobil varchar(10),
+LamaSewa int(10),
+UangMuka int(15));
+
+desc sewa;
+
+insert into sewa(nofaktursewa, kodepelanggan, tglsewa, kodemobil, lamasewa, uangmuka)
+values
+("F001", "P001", "2008-12-01", "M001", "2", "200000"),
+("F001", "P001", "2008-12-01", "M003", "2", "200000"),
+("F002", "P002", "2008-12-02", "M002", "1", "100000");
+
+select * from sewa;
+
+create table Pelanggan
+(Kode varchar(10) primary key,
+Nama varchar(30),
+Kontak varchar(15),
+Alamat text,
+Kota Varchar(20),
+KodePos int(10),
+Telepon varchar(12));
+
+desc pelanggan;
+
+insert into pelanggan(kode, nama, kontak, alamat, kota, kodepos, telpon)
+values
+("P001", "PT FOX RIVER", "HENDRA", "JL. JEND. SUDIRMAN 657", "BENGKULU", "30245", "1234567"),
+("P002", "CV FOXCON", "IWAN", "JL. WAHID HASYIM 743", "JAKARTA", "73429", 234567),
+("P003", "PT FARMACON", "YANI", "JL. AHMAD DALAN 45", "LAMPUNG", "28349", "3334445");
+
+select * from pelanggan;
+
+select mobil.kode, mobil.jenis, mobil.merk, sewa.nofaktursewa, sewa.tglsewa, sewa.lamasewa
+from mobil left join sewa on mobil.kode = sewa.kodemobil order by mobil.kode asc;
+
+select
+sewa.nofaktursewa,
+pelanggan.nama,
+sewa.tglsewa,
+mobil.jenis,
+mobil.merk,
+sewa.lamasewa,
+sewa.uangmuka
+from sewa left join mobil on mobil.kode = sewa.kodemobil
+left join pelanggan on pelanggan.kode = sewa.kodepelanggan;
+
+select
+pelanggan.nama,
+pelanggan.kota,
+sewa.nofaktursewa,
+sewa.tglsewa,
+sewa.kodemobil,
+sewa.lamasewa,
+sewa.uangmuka
+from pelanggan left join sewa on pelanggan.kode = sewa.kodepelanggan;
+
+select
+pelanggan.nama,
+pelanggan.kota,
+sewa.nofaktursewa,
+sewa.tglsewa,
+sewa.kodemobil,
+sewa.lamasewa,
+sewa.uangmuka
+from pelanggan right join sewa on pelanggan.kode = sewa.kodepelanggan;
+
